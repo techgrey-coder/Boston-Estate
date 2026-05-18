@@ -17,6 +17,29 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Boston Estates",
   description: "Designed by Tech-Grey",
+   openGraph: {
+    title: "Boston Estates",
+    description: "Luxury real estate experiences designed by Tech-Grey",
+    url: "https://boston-estates.vercel.app",
+    siteName: "Boston Estates",
+    images: [
+      {
+        url: "/image copy.png",
+        width: 1200,
+        height: 630,
+        alt: "Boston Estates",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Boston Estates",
+    description: "Luxury real estate experiences designed by Tech-Grey",
+    images: ["/image copy.png"],
+  },
 };
 
 export default function RootLayout({
