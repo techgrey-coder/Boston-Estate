@@ -24,10 +24,11 @@ export const metadata: Metadata = {
     siteName: "Boston Estates",
     images: [
       {
-        url: "/image copy.png",
+        url: "/logo.png",
         width: 1200,
         height: 630,
         alt: "Boston Estates",
+        
       },
     ],
     locale: "en_US",
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Boston Estates",
     description: "Luxury real estate experiences designed by Tech-Grey",
-    images: ["/image copy.png"],
+    images: ["/logo.png"],
   },
 };
 
