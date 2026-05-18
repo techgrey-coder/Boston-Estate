@@ -3,17 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { SideMenu } from "./components/sideMenu";
-import HeroSection from "./components/section/VideoPage";
-import IconShuffle from "./components/IconFade";
-import { Baloo_2, Inter, Fredoka } from "next/font/google";
-import { useState } from "react";
-import { SearchSection } from "./components/SearchBar";
-import { ProductCarousel } from "./components/HexaCard";
-import { ProductArticle } from "./components/EstateCard";
-import { Comment } from "./components/CommentPage";
-import { CommentCard } from "./components/CommentLarge";
-import { useRef, useEffect } from "react";
+import { SideMenu } from "../components/sideMenu";
+import ContactSection from "../components/section/ContactPage";
+import IconShuffle from "../components/IconFade";
+import { useEffect, useState, useRef } from "react";
+import { Baloo_2 } from "next/font/google";
+import { FaHeadset } from "react-icons/fa6";
+import { IoChevronDown } from "react-icons/io5";
+import { HiOutlineMapPin } from "react-icons/hi2";
+import { RiInstagramFill } from "react-icons/ri";
 import {
   Facebook,
   Instagram,
@@ -29,12 +27,40 @@ const baloo = Baloo_2({
   weight: "400",
   subsets: ["latin"],
 });
-const inter = Inter({ subsets: ["latin"] });
-const fredoka = Fredoka({ subsets: ["latin"] });
-export default function Home() {
+
+const customerCare = [
+  {
+    title: "Find Offices Near You",
+    description:
+      "Locate our branches across Lagos, Abuja, Port Harcourt, Kano, Enugu, and more with interactive map guidance.",
+    icon: <HiOutlineMapPin />,
+    gradient:
+      "from-[#eab308] via-[#facc15] to-[#fde047]",
+  },
+  {
+    title: "Consultations & Enquiries",
+    description:
+      "Speak directly with our support team for property enquiries, inspections, consultations, and guidance.",
+    icon: <FaHeadset />,
+    gradient:
+      "from-[#16a34a] via-[#22c55e] to-[#4ade80]",
+  },
+  {
+    title: "Stay Connected",
+    description:
+      "Follow our social platforms for market updates, new listings, investment opportunities, and announcements.",
+    icon: <RiInstagramFill />,
+    gradient:
+      "from-[#ec4899] via-[#f472b6] to-[#fb7185]",
+  },
+];
+
+export default function Contact() {
   const pathname = usePathname();
   const isActive = (path: string) => pathname === path;
-  const [isSearch, setIsSearch] = useState(false);
+  const footerRef = useRef<HTMLElement | null>(null);
+  const [footerVisible, setFooterVisible] = useState(false);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
   const navLinks = [
     { href: "/", label: "HOME" },
     { href: "/about", label: "ABOUT" },
@@ -42,39 +68,6 @@ export default function Home() {
     { href: "/contact", label: "CONTACT" },
     { href: "/developer", label: "DEVELOPER" }
   ];
-
-  const reviews = [
-    {
-      name: "Amaka O.",
-      date: "February 2026",
-      rating: 5,
-      story:
-        "Boston Estates made the entire process effortless. From inspection to handover, everything felt premium and organized. The finishing, security, and environment exceeded what we expected.",
-    },
-    {
-      name: "Daniel K.",
-      date: "January 2026",
-      rating: 5,
-      story:
-        "What impressed me most was the attention to detail. The estate is peaceful, beautifully planned, and genuinely feels like a modern luxury community.",
-    },
-    {
-      name: "Zainab A.",
-      date: "December 2025",
-      rating: 4,
-      story:
-        "The customer service was excellent throughout. Every question was answered quickly, and the transparency gave us confidence while making our decision.",
-    },
-    {
-      name: "Kelvin A.",
-      date: "July 2025",
-      rating: 5,
-      story:
-        "Boston Estates delivered beyond expectations. The architecture, lighting, and overall atmosphere give it a truly high-end feel.",
-    },
-  ];
-  const footerRef = useRef<HTMLElement | null>(null);
-  const [footerVisible, setFooterVisible] = useState(false);
 
   useEffect(() => {
     const footer = footerRef.current;
@@ -97,7 +90,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col">
-      <main className="flex flex-col w-full items-start justify-between overflow-hidden h-full">
+      <main className="flex flex-col w-full items-start justify-between overflow-hidden h-fit">
         <div className="flex flex-col w-full h-fit items-start bg-background">
           <header
             className={`
@@ -185,96 +178,183 @@ export default function Home() {
 
             </nav>
           </header>
-          <section className="w-full h-130 md:h-170 lg:h-210 xl:h-220 mt-20">
+          <section className="w-full h-120 md:h-170 lg:h-210 xl:h-220 mt-20">
             <div className="w-full h-full flex">
-              <HeroSection />
+              <ContactSection />
 
             </div>
 
           </section>
-          <article className=" w-full h-fit bg-linear-to-b from-[rgba(0,27,10,0.12)] via-[rgba(255,255,255,0.14)] to-background  flex flex-col items-center mt-25">
-            <div className="relative w-full h-15 md:h-20 lg:h-30 flex flex-row items-center gap-2">
-              <div className="w-[20%] lg:w-[25%] h-full flex items-center z-20">
-                <SearchSection isSearch={isSearch} setIsSearch={setIsSearch} />
-              </div>
 
-              <div
-                className={`
-      w-[55%] h-full lg:h-20 font-serif text-lg md:text-2xl lg:text-4xl font-semibold text-black flex items-center justify-center rounded-lg
-      transition-all duration-300
-      
-      ${isSearch ? "opacity-0 pointer-events-none lg:opacity-100 lg:pointer-events-auto" : "opacity-100"}
-    `}
-              >
-                PEAK PROPERTIES
-              </div>
-
-              <div
-                className={` ${inter.className}
-      flex w-[25%] h-full text-green-800 text-[10px] md:text-[10px] lg:text-[12px] items-end justify-center rounded-lg hover:text-black
-      transition-all duration-300
-    `}
-              >
-                <Link href='/properties#props'>
-                  Explore More →
-                </Link>
-              </div>
+          <div className="bg-linear-to-b from-background via-emerald-300/30 to-background w-full h-full flex flex-col justify-center items-center mt-20">
+            <div className="flex w-full h-15 md:h-20 items-center justify-center">
+              <h2 className="text-[rgb(0,27,10)] font-semibold tracking-[0.25em] text-[14px] md:text-[17px] lg:text-[19px]">Reach Out For Support
+              </h2>
             </div>
-            <section className="w-full h-full grid grid-cols-1 mt-15 ">
-              <div className=" w-full h-full flex justify-center items-center scroll-smooth"><ProductCarousel /></div>
-              <article className=" w-full h-fit mt-20 flex flex-col items-center">
-                <div className=" w-full h-15 md:h-20 flex flex-row justify-evenly items-center">
-                  <div className="bg-[rgb(0,27,10)] px-1.5 py-1.5 lg:px-2 lg:py-2 rounded-full"></div>
-                  <div className="bg-[rgb(0,27,10)] px-1.5 py-1.5 lg:px-2 lg:py-2 rounded-full"></div>
-                  <div className="bg-[rgb(0,27,10)] px-1.5 py-1.5 lg:px-2 lg:py-2 rounded-full"></div>
+            <section className="w-full py-16 md:py-24">
+              <article className="overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/4 backdrop-blur-2xl shadow-[0_20px_80px_rgba(0,0,0,0.18)]">
+
+                {/* Header */}
+                <div id="care" className="border-b border-white/10 px-6 md:px-10 py-8 md:py-10">
+
+                  <div className="flex items-center gap-4">
+
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-br from-[#eab308] to-[#facc15] shadow-[0_10px_30px_rgba(234,179,8,0.35)]">
+                      <FaHeadset className="text-black text-2xl" />
+                    </div>
+
+                    <div>
+                      <p className="text-[11px] uppercase tracking-[0.32em] text-[#eab308] font-semibold">
+                        Customer Care Center
+                      </p>
+
+                      <h2 className="mt-2 text-[rgb(0,27,10)] text-3xl md:text-5xl font-semibold tracking-tight leading-tight">
+                        Dedicated Support <br className="hidden md:block" />
+                        Wherever You Are
+                      </h2>
+                    </div>
+
+                  </div>
+
                 </div>
-                <div className=" w-full h-fit flex flex-col items-start">
-                  <div className={` text-[rgb(0,27,10)] font-semibold font-serif flex items-center
-                   justify-start text-15px md:text-[15px]  lg:text-[17px] w-[70%] lg:w-[50%] h-15 md:h-20 ml-10 `}>PREMIUM OPTIONS </div>
-                  <div className="w-full h-fit"><ProductArticle /></div>
+
+                {/* Cards */}
+                <div className="flex flex-col gap-5 p-6 md:p-10">
+
+                  {customerCare.map((question, index) => {
+                    const isOpen = openIndex === index;
+
+                    return (
+                      <div
+                        key={index}
+                        className={`group overflow-hidden rounded-4xl border transition-all duration-500 ${isOpen
+                          ? "border-[#eab308]/30 bg-linear-to-br from-[rgb(0,27,10)] via-[rgb(6,45,20)] to-[rgb(15,75,35)] shadow-[0_20px_60px_rgba(234,179,8,0.12)]"
+                          : "border-white/10 bg-white/3 hover:border-white/20 hover:bg-white/5"
+                          }`}
+                      >
+
+                        <button
+                          onClick={() => setOpenIndex(isOpen ? null : index)}
+                          className="flex w-full items-center justify-between gap-6 px-6 md:px-8 py-6 transition-all duration-300"
+                        >
+
+                          <div className="flex items-start gap-5 text-left">
+
+                            {/* Icon */}
+                            <div
+                              className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-linear-to-br ${question.gradient} shadow-lg transition-all duration-300 ${isOpen ? "scale-105" : "group-hover:scale-105"
+                                }`}
+                            >
+                              <div className="text-black text-2xl">
+                                {question.icon}
+                              </div>
+                            </div>
+
+                            {/* Text */}
+                            <div>
+
+                              <p
+                                className={`text-[11px] uppercase tracking-[0.28em] font-semibold transition-colors duration-300 ${isOpen
+                                  ? "text-[#eab308]"
+                                  : "text-[rgb(0,27,10)]"
+                                  }`}
+                              >
+                                {question.title}
+                              </p>
+
+                              <h3
+                                className={`mt-3 text-sm md:text-base leading-relaxed max-w-2xl transition-colors duration-300 ${isOpen
+                                  ? "text-white/75"
+                                  : "text-[rgb(0,27,10)]/70"
+                                  }`}
+                              >
+                                {question.description}
+                              </h3>
+
+                            </div>
+
+                          </div>
+
+                          {/* Toggle */}
+                          <div
+                            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${isOpen
+                              ? "rotate-180 border-[#eab308]/30 bg-[#eab308] text-black"
+                              : "border-white/10 bg-white/4 text-[rgb(0,27,10)]"
+                              }`}
+                          >
+                            <IoChevronDown className="text-lg" />
+                          </div>
+
+                        </button>
+
+                        {/* Expand Content */}
+                        <div
+                          className={`grid transition-all duration-500 ease-in-out ${isOpen
+                            ? "grid-rows-[1fr] opacity-100"
+                            : "grid-rows-[0fr] opacity-0"
+                            }`}
+                        >
+                          <div className="overflow-hidden">
+
+                            <div className="px-6 md:px-8 pb-8">
+
+                              <div className="h-px w-full bg-linear-to-r from-transparent via-[#eab308]/30 to-transparent mb-6" />
+
+                              {/* MAP SECTION */}
+                              {index === 0 && (
+                                <div className="relative overflow-hidden rounded-[1.8rem] border border-white/10 bg-[#07140b] p-6">
+
+                                  {/* Fake map grid */}
+                                  <div className="absolute inset-0 opacity-[0.06] bg-[linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)] bg-size:40px_40px" />
+
+                                  <div className="relative flex flex-wrap gap-4">
+
+                                    {[
+                                      "Lagos",
+                                      "Abuja",
+                                      "Port Harcourt",
+                                      "Kano",
+                                      "Enugu",
+                                      "Ibadan",
+                                    ].map((city, i) => (
+                                      <div
+                                        key={i}
+                                        className="flex items-center gap-2 rounded-full border border-[#eab308]/20 bg-white/5 px-4 py-2"
+                                      >
+                                        <HiOutlineMapPin className="text-[#eab308]" />
+                                        <span className="text-sm text-white/80">
+                                          {city}
+                                        </span>
+                                      </div>
+                                    ))}
+
+                                  </div>
+
+                                  <div className="mt-6 rounded-2xl border border-[#eab308]/20 bg-linear-to-r from-[#eab308]/10 to-transparent p-4">
+                                    <p className="text-sm leading-relaxed text-white/70">
+                                      Explore office locations nationwide and connect with
+                                      the nearest support center for property consultations,
+                                      inspections, and assistance.
+                                    </p>
+                                  </div>
+
+                                </div>
+                              )}
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </div>
+                    );
+                  })}
+
                 </div>
               </article>
             </section>
-          </article>
-          <div className=" w-full h-fit mt-15 pb-16 bg-linear-to-b  from-zinc-50
-                via-white/30
-                to-background">
-            <div className=" w-[70%] h-20 text-black ml-7 font-semibold font-serif text-[14px] md:text-[16px] lg:text-[16px] xl:text-[16px] mt-10">TESTIMONIAL</div>
-            <div
-              className="
-    w-full
-    flex
-    lg:hidden
-    overflow-x-auto
-    scrollbar-hide
-    no-scrollbar
-    snap-x
-    snap-mandatory
-    gap-4
-    px-4
-    py-2
-    scroll-smooth
-  "
-            >
-              {reviews.map((review, index) => (
-                <div
-                  key={index}
-                  className="
-        snap-center
-        shrink-0
-        w-[88%]
-        sm:w-[72%]
-        md:w-[58%]
-      "
-                >
-                  <Comment review={review} />
-                </div>
-              ))}
-            </div>
-            <div className="w-full h-fit hidden lg:flex lg:flex-col">
-              <div className="w-full h-fit overflow-x-scroll no-scrollbar"> <CommentCard /></div>
-            </div>
           </div>
+
           <footer className="
             transition-all
             duration-500
@@ -340,7 +420,6 @@ export default function Home() {
                       <Image
                         src="/image copy.png"
                         alt="Boston Estates Logo"
-                        style={{ height: "auto" }}
                         width={150}
                         height={20}
                         priority
@@ -430,7 +509,7 @@ export default function Home() {
           </footer>
         </div>
 
-      </main >
-    </div >
+      </main>
+    </div>
   );
 }

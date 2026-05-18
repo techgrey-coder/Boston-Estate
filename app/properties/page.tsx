@@ -3,17 +3,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { SideMenu } from "./components/sideMenu";
-import HeroSection from "./components/section/VideoPage";
-import IconShuffle from "./components/IconFade";
-import { Baloo_2, Inter, Fredoka } from "next/font/google";
-import { useState } from "react";
-import { SearchSection } from "./components/SearchBar";
-import { ProductCarousel } from "./components/HexaCard";
-import { ProductArticle } from "./components/EstateCard";
-import { Comment } from "./components/CommentPage";
-import { CommentCard } from "./components/CommentLarge";
-import { useRef, useEffect } from "react";
+import { SideMenu } from "../components/sideMenu";
+import PropsSection from "../components/section/PropsPage";
+import { useEffect, useState, useRef } from "react";
+import IconShuffle from "../components/IconFade";
+import PropertyDetailsPage from "../components/Props/Property";
+import PropertyDetails from "../components/Props/Property2";
+import GardenVille from "../components/Props/Property3";
+import { Baloo_2 } from "next/font/google";
 import {
   Facebook,
   Instagram,
@@ -29,11 +26,13 @@ const baloo = Baloo_2({
   weight: "400",
   subsets: ["latin"],
 });
-const inter = Inter({ subsets: ["latin"] });
-const fredoka = Fredoka({ subsets: ["latin"] });
-export default function Home() {
+
+
+export default function Properties() {
   const pathname = usePathname();
   const isActive = (path: string) => pathname === path;
+  const footerRef = useRef<HTMLElement | null>(null);
+  const [footerVisible, setFooterVisible] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
   const navLinks = [
     { href: "/", label: "HOME" },
@@ -42,39 +41,6 @@ export default function Home() {
     { href: "/contact", label: "CONTACT" },
     { href: "/developer", label: "DEVELOPER" }
   ];
-
-  const reviews = [
-    {
-      name: "Amaka O.",
-      date: "February 2026",
-      rating: 5,
-      story:
-        "Boston Estates made the entire process effortless. From inspection to handover, everything felt premium and organized. The finishing, security, and environment exceeded what we expected.",
-    },
-    {
-      name: "Daniel K.",
-      date: "January 2026",
-      rating: 5,
-      story:
-        "What impressed me most was the attention to detail. The estate is peaceful, beautifully planned, and genuinely feels like a modern luxury community.",
-    },
-    {
-      name: "Zainab A.",
-      date: "December 2025",
-      rating: 4,
-      story:
-        "The customer service was excellent throughout. Every question was answered quickly, and the transparency gave us confidence while making our decision.",
-    },
-    {
-      name: "Kelvin A.",
-      date: "July 2025",
-      rating: 5,
-      story:
-        "Boston Estates delivered beyond expectations. The architecture, lighting, and overall atmosphere give it a truly high-end feel.",
-    },
-  ];
-  const footerRef = useRef<HTMLElement | null>(null);
-  const [footerVisible, setFooterVisible] = useState(false);
 
   useEffect(() => {
     const footer = footerRef.current;
@@ -97,8 +63,8 @@ export default function Home() {
 
   return (
     <div className="flex flex-col">
-      <main className="flex flex-col w-full items-start justify-between overflow-hidden h-full">
-        <div className="flex flex-col w-full h-fit items-start bg-background">
+      <main className="flex flex-col w-full items-start justify-between overflow-hidden h-fit">
+        <div className="flex flex-col w-full h-full items-start bg-background">
           <header
             className={`
     fixed
@@ -185,100 +151,29 @@ export default function Home() {
 
             </nav>
           </header>
-          <section className="w-full h-130 md:h-170 lg:h-210 xl:h-220 mt-20">
+          <section className="w-full h-120 md:h-170 lg:h-210 xl:h-220 mt-20">
             <div className="w-full h-full flex">
-              <HeroSection />
+              <PropsSection />
 
             </div>
 
           </section>
-          <article className=" w-full h-fit bg-linear-to-b from-[rgba(0,27,10,0.12)] via-[rgba(255,255,255,0.14)] to-background  flex flex-col items-center mt-25">
-            <div className="relative w-full h-15 md:h-20 lg:h-30 flex flex-row items-center gap-2">
-              <div className="w-[20%] lg:w-[25%] h-full flex items-center z-20">
-                <SearchSection isSearch={isSearch} setIsSearch={setIsSearch} />
-              </div>
 
-              <div
-                className={`
-      w-[55%] h-full lg:h-20 font-serif text-lg md:text-2xl lg:text-4xl font-semibold text-black flex items-center justify-center rounded-lg
-      transition-all duration-300
-      
-      ${isSearch ? "opacity-0 pointer-events-none lg:opacity-100 lg:pointer-events-auto" : "opacity-100"}
-    `}
-              >
-                PEAK PROPERTIES
-              </div>
 
-              <div
-                className={` ${inter.className}
-      flex w-[25%] h-full text-green-800 text-[10px] md:text-[10px] lg:text-[12px] items-end justify-center rounded-lg hover:text-black
-      transition-all duration-300
-    `}
-              >
-                <Link href='/properties#props'>
-                  Explore More →
-                </Link>
-              </div>
-            </div>
-            <section className="w-full h-full grid grid-cols-1 mt-15 ">
-              <div className=" w-full h-full flex justify-center items-center scroll-smooth"><ProductCarousel /></div>
-              <article className=" w-full h-fit mt-20 flex flex-col items-center">
-                <div className=" w-full h-15 md:h-20 flex flex-row justify-evenly items-center">
-                  <div className="bg-[rgb(0,27,10)] px-1.5 py-1.5 lg:px-2 lg:py-2 rounded-full"></div>
-                  <div className="bg-[rgb(0,27,10)] px-1.5 py-1.5 lg:px-2 lg:py-2 rounded-full"></div>
-                  <div className="bg-[rgb(0,27,10)] px-1.5 py-1.5 lg:px-2 lg:py-2 rounded-full"></div>
-                </div>
-                <div className=" w-full h-fit flex flex-col items-start">
-                  <div className={` text-[rgb(0,27,10)] font-semibold font-serif flex items-center
-                   justify-start text-15px md:text-[15px]  lg:text-[17px] w-[70%] lg:w-[50%] h-15 md:h-20 ml-10 `}>PREMIUM OPTIONS </div>
-                  <div className="w-full h-fit"><ProductArticle /></div>
-                </div>
-              </article>
-            </section>
-          </article>
-          <div className=" w-full h-fit mt-15 pb-16 bg-linear-to-b  from-zinc-50
-                via-white/30
-                to-background">
-            <div className=" w-[70%] h-20 text-black ml-7 font-semibold font-serif text-[14px] md:text-[16px] lg:text-[16px] xl:text-[16px] mt-10">TESTIMONIAL</div>
-            <div
-              className="
-    w-full
-    flex
-    lg:hidden
-    overflow-x-auto
-    scrollbar-hide
-    no-scrollbar
-    snap-x
-    snap-mandatory
-    gap-4
-    px-4
-    py-2
-    scroll-smooth
-  "
-            >
-              {reviews.map((review, index) => (
-                <div
-                  key={index}
-                  className="
-        snap-center
-        shrink-0
-        w-[88%]
-        sm:w-[72%]
-        md:w-[58%]
-      "
-                >
-                  <Comment review={review} />
-                </div>
-              ))}
-            </div>
-            <div className="w-full h-fit hidden lg:flex lg:flex-col">
-              <div className="w-full h-fit overflow-x-scroll no-scrollbar"> <CommentCard /></div>
-            </div>
+          <section id="props" className="bg-linear-to-b from-[#f7f8f7] via-emerald-400/15 to-background w-full h-fit">
+            <PropertyDetails />
+          </section>
+          <div className=" w-full h-fit">
+            <PropertyDetailsPage />
           </div>
+          <div className="w-full h-fit bg-linear-to-b from-[#f7f8f7] via-[#f7f8f7] to-background">
+            <GardenVille />
+          </div>
+
           <footer className="
-            transition-all
-            duration-500
-            bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.08),transparent_70%)] bg-mist-950 w-full h-fit">
+                      transition-all
+                      duration-500
+                      bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.08),transparent_70%)] bg-mist-950 w-full h-fit">
             <div className="lg:hidden flex w-full h-full flex-col">
               <div className="flex items-center justify-start w-full px-6 h-24 border-b border-white/10">
                 <Link href="/" className="flex items-center gap-3">
@@ -298,7 +193,7 @@ export default function Home() {
                     key={href}
                     href={href}
                     className="text-white font-semibold tracking-[0.25em] text-[10px] md:text-[11px]
-             pb-3 transition duration-300 hover:pl-2"
+                       pb-3 transition duration-300 hover:pl-2"
                   >
                     {label}
                   </Link>
@@ -319,7 +214,7 @@ export default function Home() {
                     <button
                       key={i}
                       className={`w-7 h-7 md:w-11 md:h-11 border rounded-full flex items-center justify-center
-                transition-all duration-300 hover:scale-110 hover:-translate-y-1 ${color}`}
+                          transition-all duration-300 hover:scale-110 hover:-translate-y-1 ${color}`}
                     >
                       <Icon className=" w-4 h-5 md:w-5 md:h-5 transition-all duration-300" />
                     </button>
@@ -340,7 +235,6 @@ export default function Home() {
                       <Image
                         src="/image copy.png"
                         alt="Boston Estates Logo"
-                        style={{ height: "auto" }}
                         width={150}
                         height={20}
                         priority
@@ -355,7 +249,7 @@ export default function Home() {
                           key={href}
                           href={href}
                           className="text-white flex flex-col items-center justify-center font-semibold tracking-[0.25em] text-[8px]
-             pb-3 transition duration-300 hover:pl-2"
+                       pb-3 transition duration-300 hover:pl-2"
                         >
                           {label}
                         </Link>
@@ -369,7 +263,7 @@ export default function Home() {
                           key={href}
                           href={href}
                           className="text-white flex flex-col items-center justify-center font-semibold tracking-[0.25em] text-[8px]
-             pb-3 transition duration-300 hover:pl-2"
+                       pb-3 transition duration-300 hover:pl-2"
                         >
                           {label}
                         </Link>
@@ -383,7 +277,7 @@ export default function Home() {
                           key={href}
                           href={href}
                           className="text-white flex flex-col items-center justify-center font-semibold tracking-[0.25em] text-[8px]
-             pb-3 transition duration-300 hover:pl-2"
+                       pb-3 transition duration-300 hover:pl-2"
                         >
                           {label}
                         </Link>
@@ -412,7 +306,7 @@ export default function Home() {
                       <button
                         key={i}
                         className={`md:w-7 md:h-7 lg:w-8 lg:h-8 xl:w-9 xl:h-9 border rounded-full flex items-center justify-center
-                            transition-all duration-300 hover:scale-110 hover:-translate-y-1 ${color}`}
+                                      transition-all duration-300 hover:scale-110 hover:-translate-y-1 ${color}`}
                       >
                         <Icon className="md:w-4 md:h-3 lg:w-5 lg:h-4 xl:w-6 xl:h-5 transition-all duration-300" />
                       </button>
@@ -430,7 +324,7 @@ export default function Home() {
           </footer>
         </div>
 
-      </main >
-    </div >
+      </main>
+    </div>
   );
 }
