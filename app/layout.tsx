@@ -17,6 +17,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Boston Estates",
   description: "Designed by Tech-Grey",
+  
    openGraph: {
     title: "Boston Estates",
     description: "Luxury real estate experiences designed by Tech-Grey",
